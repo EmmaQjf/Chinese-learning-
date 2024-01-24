@@ -103,4 +103,12 @@ exports.deleteUser = async function deleteUser(req, res) {
     }
 }
 
+exports.showUser = async(req, res) => {
+    try {
+        // const user = await User.findOne({_id: req.user._id})
+        res.send(req.user);
+    } catch (error) {
+        res.status(400).json({message: error.message})
+    }
+}
 

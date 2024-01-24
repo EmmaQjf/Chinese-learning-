@@ -18,15 +18,21 @@ exports.indexWordsets = async(req, res) => {
     }  
 }
 
+// the req.user.wordsets are not updated and added in wordsets deck 
 exports.createWordset = async(req, res) => {
     try {
-        req.body.user = req.user._id
+        req.body.user = req.user._id // create a studyset and refill the user with the user_id
         const wordset = await Wordset.create(req.body)
-        req.user.wordsets?
-        req.user.wordsets.addToSet({_id: wordset._id}):
-        req.user.wordsets = [{_id: wordset._id}] // when a new user is created, should it not be an empty array for the value of property todos?
-        res.json(todo)
-        res.json(wordset)
+        req.user.wordsets.push(wordset._id)
+        req.user.save()
+        const updatedUser = req.user
+        res.json({wordset, updatedUser})
+
+        // req.user.wordsets?
+        // req.user.wordsets.addToSet({ wordset._id}):
+        // req.user.wordsets = [{ wordset._id}] 
+        // const updatedUser = req.user
+        // res.json({wordset, updatedUser})
     } catch (error) {
         res.status(400).json({message: error.message})
     }  
