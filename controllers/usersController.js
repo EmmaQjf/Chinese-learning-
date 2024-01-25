@@ -10,6 +10,13 @@ router.put('/:id', userCtrl.auth, userCtrl.updateUser) //tested
 router.delete('/:id', userCtrl.auth, userCtrl.deleteUser) //tested
 router.get('/:id',userCtrl.auth, userCtrl.showUser) //tested
 router.get('/', userCtrl.auth, userCtrl.indexUser) // tested
+
+router.post('/', userCtrl.createUser) 
+router.get('/', userCtrl.indexUser)
+router.post('/login', userCtrl.loginUser)
+router.get('/:id',userCtrl.auth, userCtrl.showUser) 
+router.put('/:id', userCtrl.auth, userCtrl.updateUser)
+router.delete('/:id', userCtrl.auth, userCtrl.deleteUser)
 */
 exports.auth = async (req, res, next) => {
     try {
@@ -75,9 +82,9 @@ exports.updateUser = async(req, res) => {
         updates.forEach(update => 
             req.user[update] = req.body[update])
         await req.user.save() 
-        const token = await req.user.generateAuthToken()
-        const savedUser = req.user
-        res.json({savedUser,token})
+        const token = await req.user.generateAuthToken() // generate a new token 
+        const updatedUser = req.user
+        res.json({updatedUser,token})
     } catch (error) {
         res.status(400).json({message: error.message})   
     }
