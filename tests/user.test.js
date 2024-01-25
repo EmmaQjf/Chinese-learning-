@@ -5,7 +5,7 @@ const { MongoMemoryServer} = require('mongodb-memory-server')
 const app = require('../app')
 const server = app.listen(8080, () => console.log('Testing on PORT 8080'))
 const User = require('../models/user')
-const { getMaxListeners } = require('../models/wordset')
+
 
 
 let mongoServer
@@ -16,7 +16,7 @@ beforeAll(async () => {
 })
 
 afterAll(async() => {
-    mongoose.connection.close()
+   await mongoose.connection.close()
     mongoServer.stop()
     server.close()
 })
