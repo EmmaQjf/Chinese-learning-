@@ -106,7 +106,7 @@ describe('testing the user endpoints', () => {
         const response = await request(app).get('/users')
 
         expect(response.statusCode).toBe(200)
-
+        expect(Array.isArray(response.body)).toBeTruthy() // use response.body instead of response
         for(let i = 0; i < response.length; i++){
             expect(response[i]).toHaveProperty('username')
             expect(response[i]).toHaveProperty('email')

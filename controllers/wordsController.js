@@ -2,13 +2,13 @@ const Wordset = require('../models/wordset')
 const Word = require('../models/word')
 
 /*
-router.get('/', userController.auth, wordCtrl.indexWords) // tested
-router.post('/', userController.auth, wordCtrl.createWord) // tested
-router.put('/:id', userController.auth, wordCtrl.updateWord) //tested
-router.get('/:id', userController.auth, wordCtrl.showWord) // tested
-router.delete('/:id', userController.auth, wordCtrl.deleteWord) //tested
-router.get('/level/:number',userController.auth, wordCtrl.indexLevelNum)//tested
-router.get('/topic/:theme',userController.auth, wordCtrl.indexTopic) //tested
+router.get('/', wordCtrl.indexWords) // the word list available to all users
+router.get('/:id', wordCtrl.showWord) // the specific word info is avaiable to all users
+router.post('/', userCtrl.auth, wordCtrl.createWord)
+router.put('/:id', userCtrl.auth, wordCtrl.updateWord)
+router.delete('/:id', userCtrl.auth, wordCtrl.deleteWord)
+router.get('/level/:number',wordCtrl.indexLevelNum)
+router.get('/topic/:theme',wordCtrl.indexTopic)
 */
 
 exports.indexWords = async(req, res) => {
@@ -50,7 +50,8 @@ exports.showWord = async(req, res) => {
 exports.deleteWord = async(req, res) => {
     try {
         const foundWord = await Word.findOneAndDelete({_id: req.params.id})
-        res.status(200).json({msg: `The word ${foundWord} is deleted`})
+        // res.status(200).json({msg: `The word ${foundWord} is deleted`})
+        res.status(200).json({msg: 'The word is deleted'})
     } catch (error) {
         res.status(400).json({message: error.message})
     }  
