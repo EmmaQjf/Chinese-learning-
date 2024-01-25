@@ -40,4 +40,18 @@ describe('testing the user endpoints', () => {
         expect(response.body.user.email).toEqual('emma@gmail.com')
 
     })
+
+    test('It should login a user', async() => {
+        const user1 = new User({username: "Emma", email: "emma@gmail.com",password: "123456"})
+        await user1.save()
+        const response = await request(app)
+        .post('/users/login')
+        .send({email: "emma@gmail.com",password: "123456"})
+        
+
+        expect(response.statusCode).toBe(200)
+        expect(response.body.user.username).toEqual('Emma')
+        expect(response.body.user.email).toEqual('emma@gmail.com')
+
+    })
 })
