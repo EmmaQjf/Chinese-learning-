@@ -27,7 +27,6 @@ router.put('/:id', userCtrl.auth, userCtrl.updateUser) //tested
 router.delete('/:id', userCtrl.auth, userCtrl.deleteUser)
 router.get('/:id',userCtrl.auth, userCtrl.showUser) 
 router.get('/', userCtrl.indexUser)
-
 */
 
 describe('testing the user endpoints', () => {

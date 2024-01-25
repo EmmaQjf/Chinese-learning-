@@ -32,6 +32,25 @@ router.post('/:wordsetId/words/:wordId', userCtrl.auth, wordsetCtrl.addWord)
 */
 
 describe('Test the wordset endpoints', () => {
+
+    test('It should add the wordset to the word document and vice verse', async() => {
+        const user1 = new User({username: "Emma", email: "emma@gmail.com",password: "123456"})
+        await user1.save()
+        const token = await user1.generateAuthToken()  // generate a token
+
+        const wordset = await Wordset.create({title:"set11", level: 2})
+        const word = await Word.create({pinyin:"jiu dian", hanzi:"酒店", meaning: "hotel", level: 2, topic: "store"})
+
+        const response = await request(app)
+        .post(`/wordsets/${wordset._id}/words/${word._id}`)
+        .set('Authorization',`Bearer ${token}`)
+
+        expect(response.statusCode).toBe(200)
+        expect(response.body).toHaveProperty('wordset')
+        expect(response.body).toHaveProperty('word')
+        expect(response.body).toHaveProperty('msg')
+
+    })
     test('it should show all the wordsets', async() => {
         const wordset1 = await Wordset.create({title: "set1", level: 1})
         const wordset2 = await Wordset.create({title: "set2", level: 2})
