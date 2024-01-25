@@ -1,12 +1,14 @@
 const User = require('../models/user')
+const Word = require('../models/word')
 const Wordset = require('../models/wordset')
 
 /*
-router.get('/', userController.auth, wordCtrl.indexWordsets)
-router.post('/', userController.auth, wordCtrl.createWordset)
-router.put('/:id', userController.auth, wordCtrl.updateWordset)
-router.get('/:id', userController.auth, wordCtrl.showWordset)
-router.delete('/:id', userController.auth, wordCtrl.deleteWordset)
+router.get('/', userController.auth, wordCtrl.indexWordsets) //tested
+router.post('/', userController.auth, wordCtrl.createWordset) //tested
+router.put('/:id', userController.auth, wordCtrl.updateWordset) //tested
+router.get('/:id', userController.auth, wordCtrl.showWordset) //tested
+router.delete('/:id', userController.auth, wordCtrl.deleteWordset) //tested
+router.post('/:wordsetId/words/:wordId', userCtrl.auth, wordsetCtrl.addWord) //tested
 */
 
 exports.indexWordsets = async(req, res) => {
@@ -57,9 +59,36 @@ exports.showWordset = async(req, res) => {
 }
 
 exports.deleteWordset = async(req, res) => {
+    // delete req.user.wordsets.pull(req.params.id)
     try {
         await Wordset.findOneAndDelete({_id: req.params.id})
-        res.sendStatus(204)
+         req.user.wordsets.pull(req.params.id) //delete the wordsets from the user model 
+        await req.user.save()
+        res.status(200).json({msg: "The wordset is deleted"})
+    } catch (error) {
+        res.status(400).json({message: error.message})
+    }  
+}
+
+//router.post('/:wordsetId/words/:wordId', userCtrl.auth, wordsetCtrl.addWord)
+exports.addWord = async(req, res) => {
+    try {
+        const foundWordset = await Wordset.findOne({_id: req.params.wordsetId})
+        if(!foundWordset) throw new Error(`Could not locate wordset with id ${req.params.wordsetId}`)
+        const foundWord = await Word.findOne({_id: req.params.wordId})
+        if(!foundWord) throw new Error(`Could not locate wordset with id ${req.params.wordId}`)
+        foundWordset.words.addToSet(foundWord._id) // addtoset only push word into array if it does not exist.
+        await foundWordset.save()
+        foundWord.wordsets.addToSet(foundWordset._id)
+        await foundWord.save()
+
+        // add wordsets to word 
+        res.status(200).json({
+            msg: `Sucessfully associate words with id ${req.params.wordId} with wordset with id ${req.params.wordsetId} `,
+            wordset: foundWordset,
+            word: foundWord
+        })
+
     } catch (error) {
         res.status(400).json({message: error.message})
     }  

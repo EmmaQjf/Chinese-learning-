@@ -4,10 +4,12 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 /*
-router.post('/', userCtrl.createUser) 
-router.post('/login', userCtrl.loginUser)
-router.put('/:id', userCtrl.auth, userCtrl.updateUser)
-router.delete('/:id', userCtrl.auth, userCtrl.deleteUser)
+router.post('/', userCtrl.createUser)  //tested
+router.post('/login', userCtrl.loginUser) //tested
+router.put('/:id', userCtrl.auth, userCtrl.updateUser) //tested
+router.delete('/:id', userCtrl.auth, userCtrl.deleteUser) //tested
+router.get('/:id',userCtrl.auth, userCtrl.showUser) //tested
+router.get('/', userCtrl.auth, userCtrl.indexUser) // tested
 */
 exports.auth = async (req, res, next) => {
     try {
@@ -64,20 +66,7 @@ exports.loginUser = async function loginUser(req, res) {
         res.status(400).json({message: error.message})
      }    
 }
-// exports.auth = async(req, res, next) => {
-//     try {
-//         const token = req.header('Authorization').replace('Bearer ', '')
-//         const data = jwt.verify(token,process.env.SECRET)
-//         const user = await User.findOne({_id: data._id})
-//         if (!user) {
-//             throw new Error('bad credential')
-//         }
-//         req.user = user
-//         next()
-//     } catch (error) {
-//         res.status(400).json({message: error.message})
-//     }
-// }
+
 
 exports.updateUser = async(req, res) => {
     try {
@@ -112,3 +101,12 @@ exports.showUser = async(req, res) => {
     }
 }
 
+
+exports.indexUser= async(req, res) => {
+    try {
+        const foundusers = await User.find({})
+        res.send(foundusers);
+    } catch (error) {
+        res.status(400).json({message: error.message})
+    }
+}
