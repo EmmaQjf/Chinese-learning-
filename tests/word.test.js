@@ -102,26 +102,26 @@ describe('testing on word endpoints', () => {
     //router.get('/topic/:theme',wordCtrl.indexTopic)
 
     test('it should show all the word with a specific level', async() => {
-        const word1 = await Word.create({pinyin:"jiu dian", hanzi:"酒店", meaning: "hotel", level: 2, topic: "store"})
-        const word2 = await Word.create({pinyin:"chao shi", hanzi:"超市", meaning: "supermarket", level: 2, topic: "store"})
-        const word3 = await Word.create({pinyin:"xi yi fang", hanzi:"洗衣房", meaning: "laundrymat", level: 1, topic: "store"})
+        // const word1 = await Word.create({pinyin:"jiu dian", hanzi:"酒店", meaning: "hotel", level: 2, topic: "store"})
+        // const word2 = await Word.create({pinyin:"chao shi", hanzi:"超市", meaning: "supermarket", level: 2, topic: "store"})
+        // const word3 = await Word.create({pinyin:"xi yi fang", hanzi:"洗衣房", meaning: "laundrymat", level: 1, topic: "store"})
 
         const response = await request(app).get('/words/level/2')
         expect(response.statusCode).toBe(200)
-        expect(response.body.length).toBe(6)
+        expect(response.body.length).toBe(4)
         expect(Array.isArray(response.body)).toBeTruthy() // use response.body instead of response
     })
 
     test('it should show all the word with a specific topic', async() => {
-        const word1 = await Word.create({pinyin:"pu tao", hanzi:"葡萄", meaning: "grape", level: 2, topic: "fruit"})
-        const word2 = await Word.create({pinyin:"li", hanzi:"梨", meaning: "pear", level: 2, topic: "fruit"})
-        const word3 = await Word.create({pinyin:"tao", hanzi:"桃", meaning: "peach", level: 1, topic: "fruit"})
-        const word4 = await Word.create({pinyin:"zu qiu", hanzi:"足球", meaning: "soccer", level: 1, topic: "sports"})
+        // const word1 = await Word.create({pinyin:"pu tao", hanzi:"葡萄", meaning: "grape", level: 2, topic: "fruit"})
+        // const word2 = await Word.create({pinyin:"li", hanzi:"梨", meaning: "pear", level: 2, topic: "fruit"})
+        // const word3 = await Word.create({pinyin:"tao", hanzi:"桃", meaning: "peach", level: 1, topic: "fruit"})
+        // const word4 = await Word.create({pinyin:"zu qiu", hanzi:"足球", meaning: "soccer", level: 1, topic: "sports"})
 
-        const response = await request(app).get('/words/topic/fruit')
+        const response = await request(app).get('/words/topic/animal')
         expect(response.statusCode).toBe(200) 
         expect(Array.isArray(response.body)).toBeTruthy() // use response.body instead of response
-        expect(response.body.length).toBe(3) // make sure you use response.body.length instead of response.length
+        expect(response.body.length).toBe(5) // make sure you use response.body.length instead of response.length
     })
 })
 

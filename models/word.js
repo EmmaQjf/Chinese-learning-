@@ -5,6 +5,7 @@ const wordSchema = new mongoose.Schema({
     meaning: {type: String, required:true},
     level: {type: Number},
     topic: {type: String, required:true},
+    user: {type:mongoose.Schema.Types.ObjectId, ref:'User' },
     wordsets:[{type: mongoose.Schema.Types.ObjectId, ref:'Wordset'}]
 },{timestamps:true}
 )

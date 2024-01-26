@@ -22,6 +22,7 @@ exports.indexWords = async(req, res) => {
 
 exports.createWord = async(req, res) => {
     try {
+        req.body.user = req.user._id // review it added the user property for all the word created 
         const word = await Word.create(req.body)
         res.json(word)
     } catch (error) {
