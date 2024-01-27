@@ -42,6 +42,18 @@ Make sure *nodemon* is installed, then run *npm run dev* in the terminal.
 _______
 ##**how to make an api request in Postman**
 
+user router
+| method | url | |
+| :---- | :----: | ----: |
+| post| /users | R1C3 |
+| get | /users | R2C3 |
+| post| /users/login | R1C3 |
+| get | /users/:id | R2C3 |
+| put| /users/:id | R1C3 |
+| delete | /users/:id | R2C3 |
+
+
+
 _______
 ##**how to run test**
 1. Check jest and supertest is installed, if not run the code npm -i D jest supertest.
@@ -54,10 +66,11 @@ _______
   "jest": {
     "testEnvironment": "node"
   },`
+3. Run *npm run test* in the terminal.
 
 _______
 ##**How to start the app without dev mode.**
-
+run the code: *npm run start*
 
 
 
