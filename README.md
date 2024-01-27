@@ -32,19 +32,28 @@ _______
 
 _______
 ##**GLOBAL INSTALLATIONS AND FILES YOU NEED**    
-git i to install all the packages: express, mongoose, dotenv, nodemon, bcrypt, jsonwebtoken, mongodb-memory-server,morgan, jest, supertest
-create a file .env and put in your MONGO_URI and SECRET
+1. run *git i* in terminal to install all the packages: express, mongoose, dotenv, nodemon, bcrypt, jsonwebtoken, mongodb-memory-server,morgan, jest, supertest
+2. create a file .env and put in your MONGO_URI and SECRET
 
 _______
-##**How to start the app in dev mode**  
-make sure nodemon is install, then on VS terminal, run npm run dev 
+##**HOW TO START THE APP IN DEV MODE**   
+Make sure *nodemon* is installed, then run *npm run dev* in the terminal.
 
 _______
 ##**how to make an api request in Postman**
 
 _______
 ##**how to run test**
-
+1. Check jest and supertest is installed, if not run the code npm -i D jest supertest.
+2. Check jest and supertest is set up on the package.json.
+ `"scripts": {
+    "test": "jest --watchAll --detectOpenHandles",
+    "start": "node server.js",
+    "dev": "nodemon"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },`
 
 _______
 ##**How to start the app without dev mode.**
