@@ -40,9 +40,43 @@ describe('testing the label endpoints', () => {
         expect(response.statusCode).toBe(200)
         expect(response.body.labelPhrase).toEqual('clothes')
         expect(response.body.user).toEqual(`${user._id}`)
+    })
 
+    test('it should show a label', async() => {
+        const label = await Label.create({labelPhrase:'beverage'})
 
+        const response = await request(app).get(`/labels/${label._id}`)
+        expect(response.statusCode).toBe(200)
+        expect(response.body.labelPhrase).toEqual('beverage')
+    })
 
+    test('it should update a label', async() => {
+        const user = new User({username:'Emily', email: 'emaily@gmail.com', password: 'emily'})
+        await user.save()
+        const token = await user.generateAuthToken()
+        const label = await Label.create({labelPhrase:'classes'})
+        const response = await request(app)
+        .put(`/labels/${label._id}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send({labelPhrase: 'class'})
+
+        expect(response.statusCode).toBe(200)
+        expect(response.body.labelPhrase).toEqual('class')
+        // expect(response.body.user).toEqual(`${user._id}`)
+    })
+
+    test ('it should delete a label', async() => {
+        const user = new User({username:'Emily', email: 'emaily@gmail.com', password: 'emily'})
+        await user.save()
+        const token = await user.generateAuthToken()
+        const label = await Label.create({labelPhrase:'identity'})
+
+        const response = await request(app)
+        .delete(`/labels/${label._id}`)
+        .set('Authorization', `Bearer ${token}`)
+
+        expect(response.statusCode).toBe(200)
+        expect(response.body.msg).toEqual('the label is deleted')
     })
 })
 

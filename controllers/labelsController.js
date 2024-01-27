@@ -2,7 +2,7 @@ const User = require('../models/user')
 const Label = require('../models/label')
 /*
 router.post('/', userCtrl.auth, labelCtrl.createLabel) //tested with postman
-router.get('/:id', userCtrl.auth, labelCtrl.showLabel)  //tested with postman
+router.get('/:id', labelCtrl.showLabel)  //tested with postman
 router.put('/:id', userCtrl.auth, labelCtrl.updateLabel) //tested with postman
 router.delete('/:id', userCtrl.auth, labelCtrl.deleteLabel)  //tested with postman
 */
