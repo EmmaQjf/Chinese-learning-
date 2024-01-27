@@ -9,14 +9,39 @@ This is an API run on the localhost:3000 that provides users with the ability to
   - [**Postman Testing Table**](#postman-testing-table)
   - [**User routes**](#user-routes)
      - [**/users (get)**](#show-all-users)
-  - [**User routes**](#user-routes)
-  - 
+     - [**/users/login**](#users-login)
+     - [**/users/signup**](#users-signup)
+     - [**/users/:id (get))**](#show-a-user)
+     - [**/users/:id (put))**](#update-a-user)
+     - [**/users/:id  (delete)**](#delete-a-user)
+   - [**Word routes**](#word-routes)
+     - [**/words (get)**](#show-all-words)
+     - [**/words (post)**](#create-a-word)
+     - [**/words/:id (get))**](#show-a-word)
+     - [**/words/:id (put))**](#update-a-word)
+     - [**/words/:id  (delete)**](#delete-a-word)
+     - [**/words/level/:number (get)**](#show-all-words-in-level)
+     - [**/words/topic/:theme (get)**](#show-all-words-in-topic)
+  - [**Label routes**](#label-routes)
+     - [**/labels (post)**](#create-a-label)
+     - [**/labels/:id (get))**](#show-a-label)
+     - [**/labels/:id (put))**](#update-a-label)
+     - [**/labels/:id  (delete)**](#delete-a-label)
+   - [**Wordset routes**](#wordset-routes)
+     - [**/wordsets (get)**](#show-all-wordsets)
+     - [**/wordsets (post)**](#create-a-wordset)
+     - [**/wordsets/:id (get))**](#show-a-wordset)
+     - [**/wordsets/:id (put))**](#update-a-wordset)
+     - [**/wordsets/:id  (delete)**](#delete-a-wordset)
+     - [**/wordsets/:wordsetId/words/:wordId**](#add-words)
+     - [**/wordsets/:wordsetId/labels/:labelId**](#add-labels)
+ 
   
-
-## <a name="getting-started"></a>Getting Started 
+  
+## Getting Started 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 
-### <a name="installing"></a>Installing
+### Installing
 
 1. copy the url: `git@github.com:EmmaQjf/Chinese-learning-4models.git` 
    <img width="715" alt="Screen Shot 2024-01-27 at 10 55 15 AM" src="https://github.com/EmmaQjf/Chinese-learning-4models/assets/122846366/cb0e5e18-dcaa-42b5-8ea2-26540492dfab">
@@ -117,7 +142,7 @@ get request to show all the users and return an array. No need to send data in B
     }
   ]
 ```
-####  /users/login  
+#### <a name="users-login"></a>/users/login  
 Post request returns an object.  No need to send data in Body. Send in the data of user password and email address. 
 <img width="830" alt="Screen Shot 2024-01-27 at 11 20 25 AM" src="https://github.com/EmmaQjf/Chinese-learning-4models/assets/122846366/b668585f-5f5d-4f37-913c-44f9a393ba75">
  ```diff
@@ -136,7 +161,7 @@ Post request returns an object.  No need to send data in Body. Send in the data 
    }
  ```
 
-#### /users (post)
+#### <a name="users-signup"></a>/users/signup
 Post request to create a user and return an object with user and token.  No token needed but need to send in the username, email and password. 
 <img width="880" alt="Screen Shot 2024-01-27 at 11 18 04 AM" src="https://github.com/EmmaQjf/Chinese-learning-4models/assets/122846366/f01a9398-a176-405c-8775-c8f233644ddf">
 
@@ -156,7 +181,7 @@ Post request to create a user and return an object with user and token.  No toke
     }
  ```
 
-#### /users/:id (get)
+#### <a name="show-a-user"></a>/users/:id (get)
 get request to show a detailed user info. Need Authorization Header With Bearer Token Bearer <token>
 <img width="1072" alt="Screen Shot 2024-01-27 at 11 22 11 AM" src="https://github.com/EmmaQjf/Chinese-learning-4models/assets/122846366/c07672da-2e50-435c-8a23-3cf891fd2092">
  ```diff
@@ -174,12 +199,12 @@ get request to show a detailed user info. Need Authorization Header With Bearer 
     }
  ```
 
-#### /users/:id  (put)
+#### <a name="update-a-user"></a>/users/:id  (put)
 put request to update user info and return an object, Authorization Header With Bearer Token Bearer <token>  
 <img width="774" alt="Screen Shot 2024-01-27 at 11 24 15 AM" src="https://github.com/EmmaQjf/Chinese-learning-4models/assets/122846366/1ad86d94-cd0b-43c0-98a5-2fb0ed5a4346">
 
 
-#### /users/:id  (delete)
+#### <a name="delete-a-user"></a>/users/:id  (delete)
 delete request to delete a user and return an object,  Authorization Header With Bearer Token Bearer <token>
 if the token is not provided, then it returns 'Not authorized' message.  
 <img width="823" alt="Screen Shot 2024-01-27 at 11 28 29 AM" src="https://github.com/EmmaQjf/Chinese-learning-4models/assets/122846366/d32e5d94-fa14-4efa-bfaa-73ad58ce3b1d">
@@ -189,9 +214,9 @@ if the token is not provided, then it returns 'Not authorized' message.
   }
 ```
 
-### WORD ROUTES
+### Word routes
 
-#### /words (get)
+#### <a name="show-all-words"></a>/words (get)
 get request to show all the words and return an array.  No need Authorization Header With Bearer Token Bearer <token> 
 <img width="825" alt="Screen Shot 2024-01-27 at 11 45 52 AM" src="https://github.com/EmmaQjf/Chinese-learning-4models/assets/122846366/059622ac-2ccf-4a40-8f29-910778d567ca">
 
@@ -214,19 +239,19 @@ get request to show all the words and return an array.  No need Authorization He
 ]
 ```
 
-#### /words   (post)
+#### <a name="create-a-word"></a>/words (post)
 Post request to create a word and return an object.  Authorization Header With Bearer Token Bearer <token>  
 
-#### /words/:id  (get)
+#### <a name="show-a-word"></a>/words/:id  (get)
 get request to show a detailed word info. No authorizaiton needed 
 
-#### /words/:id  (put)
+#### <a name="update-a-word"></a>/words/:id  (put)
 put request to update word info and return an object, Authorization Header With Bearer Token Bearer <token>  
 
-#### /words/:id (delete)
+#### <a name="delete-a-word"></a>/words/:id (delete)
 delete request to delete a wordset and return an object,  Authorization Header With Bearer Token Bearer <token>
 
-#### /words/level/:number (get)
+#### <a name="show-all-words-in-level"></a>/words/level/:number (get)
 get request to show all the words with the level and return an array,  No need Authorization Header With Bearer Token Bearer <token>
 <img width="687" alt="Screen Shot 2024-01-27 at 1 22 07 PM" src="https://github.com/EmmaQjf/Chinese-learning-4models/assets/122846366/2bb5504d-2da9-4b68-8e8d-dfec94cccbe1">
 ```diff
@@ -261,7 +286,7 @@ get request to show all the words with the level and return an array,  No need A
 ```
 
 
-#### /words/topic/:theme (get)
+#### <a name="show-all-words-in-topic"></a>/words/topic/:theme (get)
 get request to show all the words with the theme and return an array.  No need Authorization Header With Bearer Token Bearer <token>
 <img width="710" alt="Screen Shot 2024-01-27 at 1 23 25 PM" src="https://github.com/EmmaQjf/Chinese-learning-4models/assets/122846366/3e17df1b-2a8a-45b5-aff6-a3c12b60d317">
 ```diff
@@ -314,41 +339,40 @@ get request to show all the words with the theme and return an array.  No need A
 
 
 
-### LABEL ROUTES
+### label routes
 
-#### /labels  (post)
+#### <a name="create-a-label"></a>/labels  (post)
 Post request to create a label and return an object. Send in data about labelPhrase in the Body.  Need Authorization Header With Bearer Token Bearer <token>  
 
-#### /labels/:id (show)
+#### <a name="show-a-label"></a>/labels/:id (show)
 Post request to show a label and return an object. No data in Body.  No Authorization Header With Bearer Token Bearer <token>  
 
-#### /labels/:id (update)
+#### <a name="update-a-label"></a>/labels/:id (update)
 put request to update a label info and return an object. Send in data about labelPhrase in the Body. Need Authorization Header With Bearer Token Bearer <token>  
 
-#### /labels/:id 
+#### <a name="delete-a-label"></a>/labels/:id 
 Send the delete request and return an object. No data in Body.  Need Authorization Header With Bearer Token Bearer <token>  
 
 
 ### WORDSET ROUTES
 
-#### /wordsets (get)
+#### <a name="show-all-wordsets"></a>/wordsets (get)
 get request to show all the wordsets and return an array. No data in Body. No Authorization Header With Bearer Token Bearer <token>  
 
-
-#### /wordsets  (post)
+#### <a name="create-a-wordset"></a>/wordsets (post)
 Post request to create a wordset and return an object. Send in data about title and level in the Body. No Authorization Header With Bearer Token Bearer <token>
 
-#### /wordsets/:id (get)
+#### <a name="show-a-wordset"></a>/wordsets/:id (get)
 get request to show a detailed wordset info. No data in Body. No need Authorization Header With Bearer Token Bearer <token>
 
-#### /wordsets/:id (put)
+#### <a name="update-a-wordset"></a>/wordsets/:id (put)
 put request to update wordset info and return an object. Send in data about title or level in the Body. Need Authorization Header With Bearer Token Bearer <token>  
 
-#### /wordsets/:id (delete)
+#### <a name="delete-a-wordset"></a>/wordsets/:id (delete)
 delete request to delete a wordset and return an object. No data in Body.  Need Authorization Header With Bearer Token Bearer <token>
 if the token is not provided, then it returns 'Not authorized' message.  
 
-#### /wordsets/:wordsetId/words/:wordId
+#### <a name="add-words"></a>/wordsets/:wordsetId/words/:wordId
 post request to add a word to the wordsets model and add a wordsets to the word model.  Authorization Header With Bearer Token Bearer <token>
 if the token is not provided, then it returns 'Not authorized' message.  
 <img width="852" alt="Screen Shot 2024-01-27 at 12 04 32 PM" src="https://github.com/EmmaQjf/Chinese-learning-4models/assets/122846366/c60bb117-567f-46cf-9105-62e91fac3004">
@@ -387,7 +411,7 @@ if the token is not provided, then it returns 'Not authorized' message.
 }
 ```
 
-#### /wordsets/:wordsetId/labels/:labelId
+#### <a name="add-labels"></a>/wordsets/:wordsetId/labels/:labelId
 post request to add a label to the wordsets model and add a wordset to the label model.  Authorization Header With Bearer Token Bearer <token>
 
 <img width="807" alt="Screen Shot 2024-01-27 at 12 06 29 PM" src="https://github.com/EmmaQjf/Chinese-learning-4models/assets/122846366/27cf5f50-72bf-424e-adc5-0701d2584840">
