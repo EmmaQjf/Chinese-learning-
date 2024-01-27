@@ -9,7 +9,6 @@ How to run tests
 
 ##**USER STORY**
 
-
 + As a user, I can land on a page when I can clicks at the login or sign up buttons and be navigated to a page where I can log in or sign up.
 + As a user, I should be able to land on a page and see a Nav Bar with a navigation link to 'wordsets','words' and 'labels'
 + As a user, I can click a navagation link to see all the words and be navigated to a page where I see a list of words
@@ -24,7 +23,7 @@ How to run tests
 + As a user, I should be able to click on an individual movie and be navigated to a page where I see all the details for that particular movie"
 
 _______
-##**HOW TO INSTALL THIS APP ON YOUR LOCAL MACHINE**
+##**HOW TO INSTALL THIS APP ON YOUR LOCAL MACHINE**  
 *step1: On the top right corner, click the green button <> Code and choose SSH and copy the url: git@github.com:EmmaQjf/Chinese-learning-4models.git.
 *step2: Open Terminal and change the current working directory to the location where you want the cloned directory.
 *step3: Type git clone, and then paste the URL you copied earlier.
@@ -32,12 +31,12 @@ _______
 *step5: run code . to open the code in VS.
 
 _______
-##**GLOBAL INSTALLATIONS AND FILES YOU NEED**
+##**GLOBAL INSTALLATIONS AND FILES YOU NEED**    
 git i to install all the packages: express, mongoose, dotenv, nodemon, bcrypt, jsonwebtoken, mongodb-memory-server,morgan, jest, supertest
 create a file .env and put in your MONGO_URI and SECRET
 
 _______
-##**How to start the app in dev mode**
+##**How to start the app in dev mode**  
 make sure nodemon is install, then on VS terminal, run npm run dev 
 
 _______
