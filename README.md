@@ -6,7 +6,10 @@ How to make an api request in Postman (i.e what port, what url etc)
 How to run tests
 How to start the app without dev mode.
 
-##**USER STORY**
+```diff
+- ##**USER STORY**
+```
+
 + As a user, I can land on a page when I can clicks at the login or sign up buttons and be navigated to a page where I can log in or sign up.
 + As a user, I should be able to land on a page and see a Nav Bar with a navigation link to 'wordsets','words' and 'labels'
 + As a user, I can click a navagation link to see all the words and be navigated to a page where I see a list of words
