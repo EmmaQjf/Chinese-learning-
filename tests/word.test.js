@@ -4,8 +4,8 @@ const {MongoMemoryServer} = require('mongodb-memory-server')
 const app = require('../app')
 const server = app.listen(8082, () => console.log('listening at the port 8082'))
 const User = require('../models/user')
-const word = require('../models/word')
-const Test = require('supertest/lib/test')
+// const word = require('../models/word')
+// const Test = require('supertest/lib/test')
 const Word = require('../models/word')
 
 let mongoServer

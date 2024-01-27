@@ -82,9 +82,10 @@ exports.updateUser = async(req, res) => {
         updates.forEach(update => 
             req.user[update] = req.body[update])
         await req.user.save() 
-        const token = await req.user.generateAuthToken() // generate a new token 
-        const updatedUser = req.user
-        res.json({updatedUser,token})
+        // const token = await req.user.generateAuthToken() // only login and create needs to generate token 
+        // const updatedUser = req.user
+        // res.json({updatedUser,token})
+        res.json(req.user)
     } catch (error) {
         res.status(400).json({message: error.message})   
     }

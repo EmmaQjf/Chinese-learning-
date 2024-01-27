@@ -1,6 +1,7 @@
 const User = require('../models/user')
 const Word = require('../models/word')
 const Wordset = require('../models/wordset')
+const Label = require('../models/label')
 
 /*
 router.get('/', userController.auth, wordCtrl.indexWordsets) //tested
@@ -10,6 +11,8 @@ router.get('/:id', userController.auth, wordCtrl.showWordset) //tested
 router.delete('/:id', userController.auth, wordCtrl.deleteWordset) //tested
 router.post('/:wordsetId/words/:wordId', userCtrl.auth, wordsetCtrl.addWord) //tested
 */
+
+// router.post('/:wordsetId/labels/:labelId', userCtrl.auth, labelCtrl.addlabel) //tested
 
 exports.indexWordsets = async(req, res) => {
     try {
@@ -92,4 +95,26 @@ exports.addWord = async(req, res) => {
     } catch (error) {
         res.status(400).json({message: error.message})
     }  
+}
+
+
+//router.post('/:wordsetId/labels/:labelId', userCtrl.auth, labelCtrl.addlabel) 
+exports.addLabel = async(req, res) => {
+    try {
+        const foundWordset = await Wordset.findOne({_id: req.params.wordsetId})
+        if(!foundWordset) throw new Error(`Could not locate wordset with id ${req.params.wordsetId}`)
+        const foundLabel= await Label.findOne({_id: req.params.labelId})
+        if(!foundLabel) throw new Error(`Could not locate label with id ${req.params.labelId}`)
+        foundWordset.labels.addToSet(foundLabel._id)
+        await foundWordset.save()
+        foundLabel.wordsets.addToSet(foundWordset._id)
+        await foundLabel.save()
+        res.status(200).json({
+            msg: `Sucessfully associate wordset with id ${req.params.wordsetId} with label with id ${req.params.labelId} `,
+            wordset: foundWordset,
+            label: foundLabel
+        })
+    } catch (error) {
+        res.status(400).json({message: error.message})
+    }
 }

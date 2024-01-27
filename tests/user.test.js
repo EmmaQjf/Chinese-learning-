@@ -66,8 +66,8 @@ describe('testing the user endpoints', () => {
         .send({username: "Emma",email: "emmaqiao@gmail.com",password: "1234567"})
         
         expect(response.statusCode).toBe(200)
-        expect(response.body.updatedUser.username).toEqual('Emma')
-        expect(response.body.updatedUser.email).toEqual('emmaqiao@gmail.com')
+        expect(response.body.username).toEqual('Emma')
+        expect(response.body.email).toEqual('emmaqiao@gmail.com')
 
     })
 

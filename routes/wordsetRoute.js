@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const wordsetCtrl = require('../controllers/wordsetsController')
 const userCtrl = require('../controllers/usersController')
+const labelCtrl = require('../controllers/labelsController')
 
 
 // show all the wordsets; create wordsets, update wordset, delete wordset, show detail of one wordset
@@ -12,6 +13,7 @@ router.post('/', userCtrl.auth, wordsetCtrl.createWordset)
 router.put('/:id', userCtrl.auth, wordsetCtrl.updateWordset)
 router.delete('/:id', userCtrl.auth, wordsetCtrl.deleteWordset)
 router.post('/:wordsetId/words/:wordId', userCtrl.auth, wordsetCtrl.addWord)
+router.post('/:wordsetId/labels/:labelId', userCtrl.auth, wordsetCtrl.addLabel) 
 
 
 
