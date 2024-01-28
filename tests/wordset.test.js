@@ -6,6 +6,7 @@ const server = app.listen(8081, () => console.log('listening at the PORT 8081'))
 const {UserModel} = require('../User')
 const {WordsetModel} = require('../Wordset')
 const {WordModel} = require('../Word')
+const {Model} = require('../Label')
 
 
 let mongoServer 
@@ -120,22 +121,22 @@ describe('Test the wordset endpoints', () => {
     })
 
 
-    // add the label to the wordset
-    // test('It should add the label to the wordsets and add wordset to the lable', async() => {
-    //     const user1 = new UserModel({username: "Emma", email: "emma@gmail.com",password: "123456"})
-    //     await user1.save()
-    //     const token = await user1.generateAuthToken() 
 
-    //     const wordset = await WordsetModel.create({title: "test", level: 2})
-    //     const label = await LabelModel.create({labelPhrase: 'family'})
+    test('It should add the label to the wordsets and add wordset to the lable', async() => {
+        const user1 = new UserModel({username: "Emma", email: "emma@gmail.com",password: "123456"})
+        await user1.save()
+        const token = await user1.generateAuthToken() 
 
-    //     const response = await request(app)
-    //     .post(`/wordsets/${wordset._id}/labels/${label._id}`)
-    //     .set('Authorization', `Bearer ${token}`)
+        const wordset = await WordsetModel.create({title: "test", level: 2})
+        const label = await Model.create({labelPhrase: 'family'})
 
-    //     expect(response.statusCode).toBe(200)
-    //     expect(response.body).toHaveProperty('wordset')
-    //     expect(response.body).toHaveProperty('label')
-    //     expect(response.body).toHaveProperty('msg')
-    // })
+        const response = await request(app)
+        .post(`/wordsets/${wordset._id}/labels/${label._id}`)
+        .set('Authorization', `Bearer ${token}`)
+
+        expect(response.statusCode).toBe(200)
+        expect(response.body).toHaveProperty('wordset')
+        expect(response.body).toHaveProperty('label')
+        expect(response.body).toHaveProperty('msg')
+    })
 })
