@@ -3,8 +3,8 @@ const {MongoMemoryServer} = require('mongodb-memory-server')
 const mongoose = require('mongoose')
 const server = app.listen(8084, () => console.log('listening at the port 8084'))
 const request = require('supertest')
-const Label = require('../models/label')
-const User = require('../models/user')
+const {Model} = require('../Label')
+const {UserModel} = require('../User')
 
 let mongoServer
 
@@ -28,7 +28,7 @@ router.delete('/:id', userCtrl.auth, labelCtrl.deleteLabel)
 
 describe('testing the label endpoints', () => {
     test('it should create a label ', async() => {
-        const user = new User({username:'Emily', email: 'emaily@gmail.com', password: 'emily'})
+        const user = new UserModel({username:'Emily', email: 'emaily@gmail.com', password: 'emily'})
         await user.save()
         const token = await user.generateAuthToken()
 
@@ -43,7 +43,7 @@ describe('testing the label endpoints', () => {
     })
 
     test('it should show a label', async() => {
-        const label = await Label.create({labelPhrase:'beverage'})
+        const label = await Model.create({labelPhrase:'beverage'})
 
         const response = await request(app).get(`/labels/${label._id}`)
         expect(response.statusCode).toBe(200)
@@ -51,10 +51,10 @@ describe('testing the label endpoints', () => {
     })
 
     test('it should update a label', async() => {
-        const user = new User({username:'Emily', email: 'emaily@gmail.com', password: 'emily'})
+        const user = new UserModel({username:'Emily', email: 'emaily@gmail.com', password: 'emily'})
         await user.save()
         const token = await user.generateAuthToken()
-        const label = await Label.create({labelPhrase:'classes'})
+        const label = await Model.create({labelPhrase:'classes'})
         const response = await request(app)
         .put(`/labels/${label._id}`)
         .set('Authorization', `Bearer ${token}`)
@@ -66,10 +66,10 @@ describe('testing the label endpoints', () => {
     })
 
     test ('it should delete a label', async() => {
-        const user = new User({username:'Emily', email: 'emaily@gmail.com', password: 'emily'})
+        const user = new UserModel({username:'Emily', email: 'emaily@gmail.com', password: 'emily'})
         await user.save()
         const token = await user.generateAuthToken()
-        const label = await Label.create({labelPhrase:'identity'})
+        const label = await Model.create({labelPhrase:'identity'})
 
         const response = await request(app)
         .delete(`/labels/${label._id}`)

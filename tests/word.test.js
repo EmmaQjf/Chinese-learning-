@@ -3,10 +3,9 @@ const request = require('supertest')
 const {MongoMemoryServer} = require('mongodb-memory-server')
 const app = require('../app')
 const server = app.listen(8082, () => console.log('listening at the port 8082'))
-const User = require('../models/user')
-// const word = require('../models/word')
-// const Test = require('supertest/lib/test')
-const Word = require('../models/word')
+const {UserModel, userController, userRouter} = require('../User')
+
+const {WordModel, controller, router}= require('../Word')
 
 let mongoServer
 
@@ -35,10 +34,10 @@ router.get('/topic/:theme',wordCtrl.indexTopic)
 
 describe('testing on word endpoints', () => {
     test('it should show all the words', async() => {
-        const word1 = await Word.create({pinyin:"ni", hanzi:"你", meaning: "you", level: 1, topic: "pronoun"})
-        const word2 = await Word.create({pinyin:"she", hanzi:"蛇", meaning: "snake", level: 2, topic: "animal"})
-        const word3 = await Word.create({pinyin:"xiong mao", hanzi:"熊猫", meaning: "panda", level: 2, topic: "animal"})
-        const word4 = await Word.create({pinyin:"da xiang", hanzi:"大象", meaning: "elapant", level: 2, topic: "animal"})
+        const word1 = await WordModel.create({pinyin:"ni", hanzi:"你", meaning: "you", level: 1, topic: "pronoun"})
+        const word2 = await WordModel.create({pinyin:"she", hanzi:"蛇", meaning: "snake", level: 2, topic: "animal"})
+        const word3 = await WordModel.create({pinyin:"xiong mao", hanzi:"熊猫", meaning: "panda", level: 2, topic: "animal"})
+        const word4 = await WordModel.create({pinyin:"da xiang", hanzi:"大象", meaning: "elapant", level: 2, topic: "animal"})
 
         const response = await request(app).get('/words')
         expect(response.statusCode).toBe(200)
@@ -50,7 +49,7 @@ describe('testing on word endpoints', () => {
     })
 
     test('it should show a word', async() => {
-        const word = await Word.create({pinyin:"lao ying", hanzi:"老鹰", meaning: "eagle", level: 3, topic: 'animal'})
+        const word = await WordModel.create({pinyin:"lao ying", hanzi:"老鹰", meaning: "eagle", level: 3, topic: 'animal'})
         const response = await request(app).get(`/words/${word._id}`)
 
         expect(response.statusCode).toBe(200)
@@ -58,7 +57,7 @@ describe('testing on word endpoints', () => {
     })
 
     test('it should create a word', async() => {
-        const user1 = new User({username: "Emma", email: "emma@gmail.com", password: "123456"})
+        const user1 = new UserModel({username: "Emma", email: "emma@gmail.com", password: "123456"})
         await user1.save()
         const token = await user1.generateAuthToken()
         const response = await request(app)
@@ -71,10 +70,10 @@ describe('testing on word endpoints', () => {
     })
 
     test('it should update a word', async() => {
-        const user1 = new User({username: "Emma", email: "emma@gmail.com", password: "123456"})
+        const user1 = new UserModel({username: "Emma", email: "emma@gmail.com", password: "123456"})
         await user1.save()
         const token = await user1.generateAuthToken()
-        const word = await Word.create({pinyin:"ta", hanzi:"她", meaning: "she", level: 1, topic: "animal"})
+        const word = await WordModel.create({pinyin:"ta", hanzi:"她", meaning: "she", level: 1, topic: "animal"})
         const response = await request(app)
         .put(`/words/${word._id}`)
         .set('Authorization',`Bearer ${token}`)
@@ -86,10 +85,10 @@ describe('testing on word endpoints', () => {
 
 
     test('it should delete a word', async() => {
-        const user1 = new User({username: "Emma", email: "emma@gmail.com", password: "123456"})
+        const user1 = new UserModel({username: "Emma", email: "emma@gmail.com", password: "123456"})
         await user1.save()
         const token = await user1.generateAuthToken()
-        const word = await Word.create({pinyin:"ta", hanzi:"他", meaning: "he", level: 1, topic: "pronoun"})
+        const word = await WordModel.create({pinyin:"ta", hanzi:"他", meaning: "he", level: 1, topic: "pronoun"})
         const response = await request(app)
         .delete(`/words/${word._id}`)
         .set('Authorization',`Bearer ${token}`)

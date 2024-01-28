@@ -1,10 +1,11 @@
-
 const request = require('supertest')
 const mongoose = require('mongoose')
 const { MongoMemoryServer} = require('mongodb-memory-server')
 const app = require('../app')
 const server = app.listen(8080, () => console.log('Testing on PORT 8080'))
-const User = require('../models/user')
+//const User = require('../models/user')
+const {UserModel, userController, router} = require('../User')
+
 
 
 
@@ -21,7 +22,7 @@ afterAll(async() => {
     server.close()
 })
 /*
-router.post('/', userCtrl.createUser)  //tested
+router.post('/signup', userCtrl.createUser)  //tested
 router.post('/login', userCtrl.loginUser) //tested
 router.put('/:id', userCtrl.auth, userCtrl.updateUser) //tested
 router.delete('/:id', userCtrl.auth, userCtrl.deleteUser)
@@ -32,7 +33,7 @@ router.get('/', userCtrl.indexUser)
 describe('testing the user endpoints', () => {
     test('It should create a new user', async() => {
         const response = await request(app)
-        .post('/users')
+        .post('/users/signup')
         .send({username: "Emma", email: "emma@gmail.com",password: "123456"})
 
         expect(response.statusCode).toBe(200)
@@ -42,7 +43,7 @@ describe('testing the user endpoints', () => {
     })
 
     test('It should login a user', async() => {
-        const user1 = new User({username: "Emma", email: "emma@gmail.com",password: "123456"})
+        const user1 = new UserModel({username: "Emma", email: "emma@gmail.com",password: "123456"})
         await user1.save()
         const response = await request(app)
         .post('/users/login')
@@ -57,7 +58,7 @@ describe('testing the user endpoints', () => {
 
     
     test('it should update a user', async() => {
-        const user1 = new User({username: "Emma", email: "emma@gmail.com",password: "123456"})
+        const user1 = new UserModel({username: "Emma", email: "emma@gmail.com",password: "123456"})
         await user1.save()
         const token = await user1.generateAuthToken() // add await
         const response = await request(app)
@@ -72,7 +73,7 @@ describe('testing the user endpoints', () => {
     })
 
     test('it should delete a user' , async() => {
-        const user1 = new User({username: "Emma", email: "emma@gmail.com",password: "123456"})
+        const user1 = new UserModel({username: "Emma", email: "emma@gmail.com",password: "123456"})
         await user1.save()
         const token = await user1.generateAuthToken()
         const response = await request(app)
@@ -84,7 +85,7 @@ describe('testing the user endpoints', () => {
     })
 
     test('it should show the user', async () => {
-        const user1 = new User({username: "Emma", email: "emma@gmail.com",password: "123456"})
+        const user1 = new UserModel({username: "Emma", email: "emma@gmail.com",password: "123456"})
         await user1.save()
         const token = await user1.generateAuthToken()
         const response = await request(app)
@@ -97,9 +98,9 @@ describe('testing the user endpoints', () => {
     })
 
     test('it should show all the users', async() => {
-        const user1 = new User({username: "Emma", email: "emma@gmail.com",password: "123456"})
+        const user1 = new UserModel({username: "Emma", email: "emma@gmail.com",password: "123456"})
         await user1.save()
-        const user2 = new User({username: "John", email: "john@gmail.com",password: "123456"})
+        const user2 = new UserModel({username: "John", email: "john@gmail.com",password: "123456"})
         await user2.save()
         
         const response = await request(app).get('/users')

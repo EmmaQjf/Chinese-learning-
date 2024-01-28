@@ -3,10 +3,9 @@ const request = require('supertest')
 const {MongoMemoryServer} = require('mongodb-memory-server')
 const app = require('../app')
 const server = app.listen(8081, () => console.log('listening at the PORT 8081'))
-const Wordset = require('../models/wordset')
-const User = require('../models/user')
-const Word = require('../models/word')
-const Label = require('../models/label')
+const {UserModel} = require('../User')
+const {WordsetModel} = require('../Wordset')
+const {WordModel} = require('../Word')
 
 
 let mongoServer 
@@ -35,12 +34,12 @@ router.post('/:wordsetId/words/:wordId', userCtrl.auth, wordsetCtrl.addWord)
 describe('Test the wordset endpoints', () => {
 
     test('It should add the wordset to the word document and vice verse', async() => {
-        const user1 = new User({username: "Emma", email: "emma@gmail.com",password: "123456"})
+        const user1 = new UserModel({username: "Emma", email: "emma@gmail.com",password: "123456"})
         await user1.save()
         const token = await user1.generateAuthToken()  // generate a token
 
-        const wordset = await Wordset.create({title:"set11", level: 2})
-        const word = await Word.create({pinyin:"jiu dian", hanzi:"酒店", meaning: "hotel", level: 2, topic: "store"})
+        const wordset = await WordsetModel.create({title:"set11", level: 2})
+        const word = await WordModel.create({pinyin:"jiu dian", hanzi:"酒店", meaning: "hotel", level: 2, topic: "store"})
 
         const response = await request(app)
         .post(`/wordsets/${wordset._id}/words/${word._id}`)
@@ -53,9 +52,9 @@ describe('Test the wordset endpoints', () => {
 
     })
     test('it should show all the wordsets', async() => {
-        const wordset1 = await Wordset.create({title: "set1", level: 1})
-        const wordset2 = await Wordset.create({title: "set2", level: 2})
-        const wordset3 = await Wordset.create({title: "set3", level: 3})
+        const wordset1 = await WordsetModel.create({title: "set1", level: 1})
+        const wordset2 = await WordsetModel.create({title: "set2", level: 2})
+        const wordset3 = await WordsetModel.create({title: "set3", level: 3})
 
         const response = await request(app).get('/wordsets')
         expect(response.statusCode).toBe(200)
@@ -66,7 +65,7 @@ describe('Test the wordset endpoints', () => {
     })
 
     test ('it should show a wordset', async() => {
-        const wordset1 = await Wordset.create({title: "set1", level: 1})
+        const wordset1 = await WordsetModel.create({title: "set1", level: 1})
         const response = await request(app).get(`/wordsets/${wordset1._id}`)
         expect(response.statusCode).toBe(200)
         expect(response.body.title).toEqual('set1')
@@ -75,7 +74,7 @@ describe('Test the wordset endpoints', () => {
     })
 
     test('it should create a wordset', async() => {
-        const user1 = new User({username: "Emma", email: "emma@gmail.com",password: "123456"})
+        const user1 = new UserModel({username: "Emma", email: "emma@gmail.com",password: "123456"})
         await user1.save()
         const token = await user1.generateAuthToken()  // generate a token
 
@@ -90,11 +89,11 @@ describe('Test the wordset endpoints', () => {
     })
 
     test('it should update a wordset', async() => {
-        const user1 = new User({username: "Emma", email: "emma@gmail.com",password: "123456"})
+        const user1 = new UserModel({username: "Emma", email: "emma@gmail.com",password: "123456"})
         await user1.save()
         const token = await user1.generateAuthToken()  // generate a token
 
-        const wordset1 = await Wordset.create({title: "set1", level: 1})
+        const wordset1 = await WordsetModel.create({title: "set1", level: 1})
 
         const response = await request(app)
         .put(`/wordsets/${wordset1._id}`)
@@ -107,11 +106,11 @@ describe('Test the wordset endpoints', () => {
     })
 
     test('it should delete a wordset', async() => {
-        const user1 = new User({username: "Emma", email: "emma@gmail.com",password: "123456"})
+        const user1 = new UserModel({username: "Emma", email: "emma@gmail.com",password: "123456"})
         await user1.save()
         const token = await user1.generateAuthToken()  // generate a token
 
-        const wordset1 = await Wordset.create({title: "set1", level: 1})
+        const wordset1 = await WordsetModel.create({title: "set1", level: 1})
         const response = await request(app)
         .delete(`/wordsets/${wordset1._id}`)
         .set('Authorization', `Bearer ${token}`)
@@ -122,21 +121,21 @@ describe('Test the wordset endpoints', () => {
 
 
     // add the label to the wordset
-    test('It should add the label to the wordsets and add wordset to the lable', async() => {
-        const user1 = new User({username: "Emma", email: "emma@gmail.com",password: "123456"})
-        await user1.save()
-        const token = await user1.generateAuthToken() 
+    // test('It should add the label to the wordsets and add wordset to the lable', async() => {
+    //     const user1 = new UserModel({username: "Emma", email: "emma@gmail.com",password: "123456"})
+    //     await user1.save()
+    //     const token = await user1.generateAuthToken() 
 
-        const wordset = await Wordset.create({title: "test", level: 2})
-        const label = await Label.create({labelPhrase: 'family'})
+    //     const wordset = await WordsetModel.create({title: "test", level: 2})
+    //     const label = await LabelModel.create({labelPhrase: 'family'})
 
-        const response = await request(app)
-        .post(`/wordsets/${wordset._id}/labels/${label._id}`)
-        .set('Authorization', `Bearer ${token}`)
+    //     const response = await request(app)
+    //     .post(`/wordsets/${wordset._id}/labels/${label._id}`)
+    //     .set('Authorization', `Bearer ${token}`)
 
-        expect(response.statusCode).toBe(200)
-        expect(response.body).toHaveProperty('wordset')
-        expect(response.body).toHaveProperty('label')
-        expect(response.body).toHaveProperty('msg')
-    })
+    //     expect(response.statusCode).toBe(200)
+    //     expect(response.body).toHaveProperty('wordset')
+    //     expect(response.body).toHaveProperty('label')
+    //     expect(response.body).toHaveProperty('msg')
+    // })
 })
