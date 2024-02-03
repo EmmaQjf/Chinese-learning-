@@ -56,7 +56,7 @@ These instructions will get you a copy of the project up and running on your loc
 3. clone the repo to the local directory: `git clone git@github.com:EmmaQjf/Chinese-learning-4models.git`
 4. cd into the clone directionary.
 5. Open the code in VS `code .`  
-6. Install all the packages: express, mongoose, dotenv, nodemon, bcrypt, jsonwebtoken, mongodb-memory-server,morgan, jest, supertest:  `git i`
+6. Install all the packages: express, mongoose, dotenv, nodemon, bcrypt, jsonwebtoken, mongodb-memory-server,morgan, jest, supertest:  `npm i`
 7. Create a file .env and put in your MONGO_URI and SECRET
 ### [:arrow_up: Back to Top](#table-of-content)
 
